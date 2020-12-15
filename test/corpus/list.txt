@@ -1,0 +1,47 @@
+===========
+List - Empty list
+===========
+
+[]
+
+---
+
+(source_file (list))
+
+===========
+List With Elements
+===========
+
+[1, 2, 3]
+[true, "hello", 3]
+[
+  true,
+  [1, 2, 3]
+]
+
+---
+
+(source_file
+  (list (number) (number) (number))
+  (list (boolean) (string) (number))
+  (list (boolean) (list (number) (number) (number))))
+
+===========
+List - Error
+===========
+
+[1 2]
+
+---
+
+(source_file (list (number) (ERROR (number))))
+
+====================
+List - Trailing Separator
+====================
+
+[1,2,3,]
+
+---
+
+(source_file (list (number) (number) (number)))
