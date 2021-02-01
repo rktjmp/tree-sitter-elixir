@@ -6,7 +6,8 @@
   "author": "Thanabodee Charoenpiriyakij <wingyminus@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.2"
+    "nan": "^2.14.2",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.17.3",

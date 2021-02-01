@@ -336,7 +336,8 @@ module.exports = grammar({
             $.tuple,
             $.struct,
             $.map,
-            $.sigil
+            $.sigil,
+            $.variable
           )
         ),
         optional(COMMA)
@@ -360,7 +361,8 @@ module.exports = grammar({
         $.sigil,
         $.function_call,
         $.match,
-        $.variable
+        $.variable,
+        $.for_list_comprehension
       ),
     _term: ($) =>
       choice(
@@ -419,6 +421,39 @@ module.exports = grammar({
       prec(
         PREC.FUNCTION_NAME,
         choice($.variable, $.atom, parens($.expression))
+      ),
+
+    for_list_comprehension: ($) =>
+      seq(
+        "for",
+        choice($.for_list_generator, $.for_bitstring_generator),
+        optional(seq(COMMA, $.for_list_filter)),
+        //optional(seq(COMMA, "into: ", $.expression)),
+        //optional(seq(COMMA, "reduce: ", $.expression)),
+        // optional(seq(COMMA, "unique: ", $.boolean)),
+        $.do_block
+      ),
+
+    // to be used in into/reduce step of for comprehension
+    _collectable: ($) =>
+      choice(
+        $.tuple,
+        $.list,
+        $.map,
+        $.binary_string,
+        $.string,
+        $.function_call
+      ),
+
+    for_list_generator: ($) => seq($.expression, IN_OP, $.expression),
+    for_list_filter: ($) => sepBy(COMMA, $.expression),
+    for_bitstring_generator: ($) =>
+      seq(
+        BINARY_LEFT,
+        sepBy(COMMA, $.bin_part),
+        IN_OP,
+        choice($.binary_string, $.variable, $.function_call),
+        BINARY_RIGHT
       ),
   },
 });

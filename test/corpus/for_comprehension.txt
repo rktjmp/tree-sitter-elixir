@@ -1,0 +1,53 @@
+===========
+For - list generator
+===========
+
+for n <- [1, 2, 3, 4], do: n * n
+
+---
+
+(source_file (for_expression (list)))
+
+===========
+For - bistring generator
+===========
+
+for <<r::8, g::8, b::8 <- <<213, 45, 132, 64, 76, 32, 76, 0, 0, 234, 32, 15>> >>, do: {r, g, b}
+---
+
+(source_file (expression (for_list_comprehension (for_bitstring_generator (bin_part (variable) (bin_type_list (bin_type))) (bin_part (variable) (bin_type_list (bin_type))) (bin_part (variable) (bin_type_list (bin_type))) (binary_string (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)) (bin_part (number)))) (do_block (expression (tuple (variable) (variable) (variable)))))))
+
+===========
+For - filter tuple
+===========
+
+for {:good, n} <- [good: 1, good: 2, bad: 3, good: 4], do: n
+
+---
+
+(source_file (for_expression (list)))
+
+===========
+For - square list
+===========
+
+for n <- [ 1,  2,  3,  4], do: square(n)
+
+---
+
+(source_file (expression (for_list_comprehension 
+  (for_list_generator (expression (variable)) (expression (list (number) (number) (number) (number)))) 
+  (do_block (expression (function_call (computed_function_name (variable)) (expression (variable))))))))
+
+===========
+For - into map
+===========
+
+for {key, val} <- %{"a" => 1, "b" => 2}, into: %{}, do: {key, val * val}
+
+---
+
+(source_file (expression (for_list_comprehension 
+  (for_list_generator (expression (variable)) (expression (list (number) (number) (number) (number)))) 
+  (do_block (expression (function_call (computed_function_name (variable)) (expression (variable))))))))
+
